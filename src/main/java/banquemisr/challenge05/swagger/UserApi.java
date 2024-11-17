@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
+import java.security.Principal;
 import java.util.List;
 
 @Tag(name = "Users", description = "the User Apis")
@@ -17,7 +18,7 @@ import java.util.List;
 public interface UserApi {
     @Operation(summary = "Fetch authenticated User", description = "authenticatedUser")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "successful operation")})
-    public ResponseEntity<User> authenticatedUser();
+    public ResponseEntity<User> authenticatedUser(Principal principal);
 
     @Operation(summary = "Fetch All Users (admin , super admin)", description = "Fetch All Users (admin , super admin)")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "successful operation")})

@@ -5,7 +5,7 @@ import banquemisr.challenge05.dtos.RegisterUserDto;
 import banquemisr.challenge05.models.LoginResponse;
 import banquemisr.challenge05.models.User;
 import banquemisr.challenge05.services.AuthenticationService;
-import banquemisr.challenge05.services.JwtService;
+import banquemisr.challenge05.services.JwtServiceImpl;
 import banquemisr.challenge05.swagger.AuthenticationApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationController implements AuthenticationApi {
     @Autowired
-    JwtService jwtService;
+    JwtServiceImpl jwtService;
     @Autowired
     AuthenticationService authenticationService;
 

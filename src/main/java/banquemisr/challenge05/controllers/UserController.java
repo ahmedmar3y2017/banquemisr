@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -24,9 +25,12 @@ public class UserController implements UserApi {
 
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> authenticatedUser() {
-        // Existing code here...
-        return null;
+    public ResponseEntity<User> authenticatedUser(Principal principal) {
+        String name = principal.getName();
+
+        User byEMAIL = userService.findByEMAIL(name);
+        return new ResponseEntity<>(byEMAIL,
+                HttpStatus.OK);
     }
 
     @GetMapping

@@ -3,6 +3,7 @@ package banquemisr.challenge05.Controllers;
 import banquemisr.challenge05.controllers.TaskController;
 import banquemisr.challenge05.models.Task;
 import banquemisr.challenge05.models.TaskStatus;
+import banquemisr.challenge05.services.JwtService;
 import banquemisr.challenge05.services.TaskService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -28,14 +29,18 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 @WebMvcTest(TaskController.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@WithMockUser(username = "user", roles = "USER")
 
 public class TaskControllerUnitTests {
 
     @MockBean
     TaskService taskService;
+    @MockBean
+    JwtService jwtService;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -51,7 +56,7 @@ public class TaskControllerUnitTests {
         task.setDescription("Test Desc1");
         task.setStatus(TaskStatus.TODO);
         task.setPriority(1);
-        task.setDueDate(new Timestamp(new Date().getTime()));
+        task.setDueDate(new Date());
 
     }
 
@@ -64,6 +69,7 @@ public class TaskControllerUnitTests {
 
         // api action
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/task")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(task)));
 
@@ -133,6 +139,7 @@ public class TaskControllerUnitTests {
         task.setDescription("Test Task2 Updated");
         // api action
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders.put("/api/task")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(task)));
 
@@ -152,7 +159,8 @@ public class TaskControllerUnitTests {
         willDoNothing().given(taskService).deleteTask(task.getId());
 
         // action
-        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.delete("/api/task/{id}", task.getId()));
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.delete("/api/task/{id}", task.getId())                .with(csrf())
+        );
 
         // then - verify the output
         response.andExpect(MockMvcResultMatchers.status().isOk())

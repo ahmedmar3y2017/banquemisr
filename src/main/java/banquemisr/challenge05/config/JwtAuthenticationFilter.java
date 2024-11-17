@@ -1,6 +1,7 @@
 package banquemisr.challenge05.config;
 
 import banquemisr.challenge05.services.JwtService;
+import banquemisr.challenge05.services.JwtServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

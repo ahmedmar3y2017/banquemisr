@@ -1,5 +1,6 @@
 package banquemisr.challenge05.services;
 
+import banquemisr.challenge05.defines.Defines;
 import banquemisr.challenge05.dtos.RegisterUserDto;
 import banquemisr.challenge05.models.Role;
 import banquemisr.challenge05.models.RoleEnum;
@@ -7,6 +8,7 @@ import banquemisr.challenge05.models.User;
 import banquemisr.challenge05.repository.RoleRepository;
 import banquemisr.challenge05.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
 
     }
+
     @Override
     public User createSuperAdministrator(RegisterUserDto input) {
 
@@ -66,6 +69,13 @@ public class UserServiceImpl implements UserService {
         user.setRole(byName.get());
 
         return userRepository.save(user);
+
+    }
+
+    @Override
+    public User findByEMAIL(String email) {
+        return userRepository.findByEMAIL(email).
+                orElseThrow(() -> new UsernameNotFoundException(Defines.SECURITY_USER_NOT_FOUND));
 
     }
 }
