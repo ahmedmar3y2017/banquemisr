@@ -27,6 +27,11 @@ authorization, validation, and other features.
 ### Executing program
 
 * open cmd on root app and run following command -> mvn spring-boot:run
+* by default app listen to port 9090 
+### DB Ui H2
+http://localhost:9090/banquemisr/h2-ui
+### Swagger Ui 
+http://localhost:9090/banquemisr/swagger-ui.html
 
 ## Authors
 
