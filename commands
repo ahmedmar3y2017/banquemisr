@@ -1,0 +1,19 @@
+
+
+http://localhost:9090/banquemisr/api/task
+
+db
+http://localhost:9090/banquemisr/h2-ui
+swagger
+http://localhost:9090/banquemisr/swagger-ui.html
+
+
+-------
+pagination , filtering , sorting with unitTesting (Controller & service & repo)
+java mail service unitTesting (Controller & service )
+handle exception messages for un authorized user
+unitTesting for signup & login apis
+solve controllertest issue
+readMe File for start project
+github issue
+
